@@ -25,9 +25,9 @@
 <label>Tore Team B:</label> 
 <input type="number" id="toreB"><br><br> 
 <label>Team A Name:</label> 
-<input type=“text“ id=“name“><br><br> 
+<input type=“text“ id=“teamAname“><br><br> 
 <label>Team B Name:</label> 
-<input type=“text“ id=“name“><br><br>
+<input type=“text“ id=“teamBname“><br><br>
 <button onclick="speichern()">Tipp speichern</button> 
 <button onclick="laden()">Tipps laden</button> 
 <h2>Gespeicherte Tipps</h2> 
@@ -40,7 +40,9 @@ const supabase = createClient(supabaseUrl, supabaseKey);
     async function speichern() { 
       const name = document.getElementById("name").value; 
       const toreA = Number(document.getElementById("toreA").value); 
-      const toreB = Number(document.getElementById("toreB").value); 
+      const toreB = Number(document.getElementById("toreB").value);
+      const teamAname = document.getElementById("teamAname").value;
+      const teamBname = document.getElementById("teamBname").value;
  
       const { error } = await supabase 
         .from("tipps") 
@@ -48,7 +50,9 @@ const supabase = createClient(supabaseUrl, supabaseKey);
           { 
             name: name, 
             tore_a: toreA, 
-            tore_b: toreB 
+            tore_b: toreB,
+            team_a_name: teamAname,
+            team_b_name: teamBname
           } 
         ]); 
  
@@ -80,7 +84,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
         let tipp = data[i]; 
         text += 
           tipp.name + ": " + 
-          tipp.tore_a + " : " + tipp.tore_b + 
+          tipp.tore_a + " : " + tipp.tore_b + tipp.team_a_name + " : " + tipp.team_b_name + " : " +
           "<br>"; 
 } 
 document.getElementById("ausgabe").innerHTML = text; 
